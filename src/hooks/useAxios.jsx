@@ -1,12 +1,12 @@
+import axios from "axios";
 
+const instance = axios.create({
+  baseURL: import.meta.env.VITE_API_URL,
+  withCredentials: true,
+});
 
 const useAxios = () => {
-  return (
-    <div>
-      <h1>useAxios</h1>
-      
-    </div>
-  );
+  return instance;
 };
 
 export default useAxios;
