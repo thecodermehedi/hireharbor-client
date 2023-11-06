@@ -21,22 +21,3 @@ const Subscribe = () => {
 };
 
 export default Subscribe;
-
-/* 
-
-<div className="relative max-w-lg">
-          <label className="sr-only" htmlFor="email">
-            Email
-          </label>
-          <input
-            className="w-full rounded-full border-gray-200 bg-gray-100 p-4 pe-32 text-sm font-medium dark:border-gray-700 dark:bg-gray-800 dark:text-white focus:outline-none"
-            id="email"
-            type="email"
-            placeholder="Enter your email"
-          />
-
-          <button className="absolute end-1 top-1/2 -translate-y-1/2 rounded-full px-5 py-3 text-sm font-medium text-black transition bg-primary hover:bg-opacity-80">
-            Subscribe
-          </button>
-        </div>
-*/
