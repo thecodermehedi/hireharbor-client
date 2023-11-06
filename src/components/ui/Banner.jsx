@@ -1,4 +1,4 @@
-import bannerPhoto from "../../assets/svgs/banner.png";
+import bannerPhoto from "../../assets/banner.png";
 const Banner = () => {
   return (
     <section>
