@@ -30,7 +30,7 @@ const router = createBrowserRouter([
         element: <Register />,
       },
       {
-        path: "/jobs/:id",
+        path: "/job/:slug/:id",
         element: <JobDetails />,
       },
       {
@@ -38,7 +38,7 @@ const router = createBrowserRouter([
         element: <Blogs />,
       },
       {
-        path: "/alljobs",
+        path: "/jobs",
         element: <Jobs />,
       },
       {
