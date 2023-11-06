@@ -42,7 +42,7 @@ const Navbar = () => {
         <div className="navbar-end">
           <Link
             to={"login"}
-            className="mr-2 md:mr-5 lg:mr-0 px-5 md:px-8 lg:px-10 text-blackish font-semibold py-2 rounded-xl bg-primary hover:bg-opacity-80 transition text-base md:text-xl"
+            className="mr-2 md:mr-5 lg:mr-0 px-5 md:px-8 lg:px-10 text-blackish font-semibold py-2 rounded-2xl bg-primary hover:bg-opacity-80 transition text-base md:text-xl"
           >
             Login
           </Link>
