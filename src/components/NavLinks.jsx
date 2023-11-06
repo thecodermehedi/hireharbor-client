@@ -14,7 +14,7 @@ const NavLinks = () => {
         Home
       </NavLink>
       <NavLink
-        to={"alljobs"}
+        to={"jobs"}
         className={({isActive}) =>
           isActive
             ? "active text-primary"
