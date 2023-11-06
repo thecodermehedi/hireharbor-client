@@ -22,11 +22,11 @@ const router = createBrowserRouter([
         element: <Home />,
       },
       {
-        path: "login",
+        path: "/login",
         element: <Login />,
       },
       {
-        path: "register",
+        path: "/register",
         element: <Register />,
       },
       {
@@ -34,23 +34,23 @@ const router = createBrowserRouter([
         element: <JobDetails />,
       },
       {
-        path: "blogs",
+        path: "/blogs",
         element: <Blogs />,
       },
       {
-        path: "alljobs",
+        path: "/alljobs",
         element: <Jobs />,
       },
       {
-        path: "addjob",
+        path: "/addjob",
         element: <AddJob />,
       },
       {
-        path: "postedjobs",
+        path: "/postedjobs",
         element: <PostedJobs />,
       },
       {
-        path: "appliedjobs",
+        path: "/appliedjobs",
         element: <AppliedJobs />,
       },
     ],
