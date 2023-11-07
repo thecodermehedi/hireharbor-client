@@ -1,8 +1,13 @@
+import BannerComponent from "../components/ui/BannerComponent";
+
 const PostedJobs = () => {
   return (
-    <div>
-      <h1>PostedJobs</h1>
-    </div>
+    <section>
+      <BannerComponent
+        title="Your Job Postings"
+        subTitle="Manage and track your active job listings"
+      />
+    </section>
   );
 };
 
