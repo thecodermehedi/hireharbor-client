@@ -3,6 +3,7 @@ import {useParams} from "react-router-dom";
 import useAxios from "../hooks/useAxios";
 import JobBanner from "../components/ui/JobBanner";
 import JobDetailsTable from "../components/ui/JobDetailsTable";
+import ApplyModal from "../components/ui/ApplyModal";
 
 const JobDetails = () => {
   const {id} = useParams();
@@ -21,7 +22,7 @@ const JobDetails = () => {
     queryFn: getJob,
   });
 
-  console.log(job);
+  // console.log(job);
 
   if (isLoading) {
     return <div>Loading...</div>;
@@ -53,10 +54,6 @@ const JobDetails = () => {
     salary,
   } = job;
 
-  const hanldeApply = () => {
-    console.log("Apply");
-  };
-
   return (
     <section className="container  lg:mx-auto min-h-screen">
       <JobBanner
@@ -68,7 +65,6 @@ const JobDetails = () => {
         salary={salary}
         deadline={deadline}
         applicants={applicants}
-        hanldeApply={hanldeApply}
       />
       <JobDetailsTable
         posted={posted}
@@ -83,11 +79,7 @@ const JobDetails = () => {
         jobFunctions={jobFunctions}
         aboutCompany={aboutCompany}
       />
-      <div className="flex my-5 justify-center items-center">
-        <button onClick={hanldeApply} className="button-animate">
-          Apply Now
-        </button>
-      </div>
+      <ApplyModal job={job} />
     </section>
   );
 };
