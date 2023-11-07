@@ -8,7 +8,7 @@ const Footer = () => {
         <div className="mt-16 hidden lg:grid grid-cols-1 gap-8 lg:grid-cols-3 place-items-center">
           <div>
             <div className="flex justify-start">
-              <img src="logo.svg" alt="HireHarbor" className="w-56" />
+              <img src="/logo.svg" alt="HireHarbor" className="w-56" />
             </div>
             <p className="mt-6 max-w-md text-left leading-relaxed text-whitish text-opacity-50">
               Harboring Opportunities <br /> Crafting Careers
