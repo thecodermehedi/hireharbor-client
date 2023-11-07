@@ -7,11 +7,7 @@ const JobDetailsTable = ({
   employmentType,
   experienceLevel,
   category,
-  industries,
-  qualifications,
-  responsibilities,
-  jobFunctions,
-  aboutCompany,
+  desc,
 }) => {
   return (
     <div className="flow-root rounded-2xl border border-gray-900 py-3 shadow-sm my-5 md:my-10">
@@ -46,33 +42,8 @@ const JobDetailsTable = ({
           </dd>
         </div>
         <div className="grid grid-cols-1 gap-1 p-3 even:bg-neutral sm:grid-cols-3 sm:gap-4">
-          <dt className="font-medium text-whitish/90">Industries</dt>
-          <dd className="text-whitish/75 sm:col-span-2 capitalize">
-            {industries}
-          </dd>
-        </div>
-        <div className="grid grid-cols-1 gap-1 p-3 even:bg-neutral sm:grid-cols-3 sm:gap-4">
-          <dt className="font-medium text-whitish/90">Qualifications</dt>
-          <dd className="text-whitish/75 sm:col-span-2 capitalize">
-            {qualifications}
-          </dd>
-        </div>
-        <div className="grid grid-cols-1 gap-1 p-3 even:bg-neutral sm:grid-cols-3 sm:gap-4">
-          <dt className="font-medium text-whitish/90">Responsibilities</dt>
-          <dd className="text-whitish/75 sm:col-span-2 capitalize">
-            {responsibilities}
-          </dd>
-        </div>
-        <div className="grid grid-cols-1 gap-1 p-3 even:bg-neutral sm:grid-cols-3 sm:gap-4">
-          <dt className="font-medium text-whitish/90">Functions</dt>
-          <dd className="text-whitish/75 sm:col-span-2 capitalize">
-            {jobFunctions}
-          </dd>
-        </div>
-
-        <div className="grid grid-cols-1 gap-1 p-3 even:bg-neutral sm:grid-cols-3 sm:gap-4">
-          <dt className="font-medium text-whitish/90">About Company</dt>
-          <dd className="text-whitish/75 sm:col-span-2">{aboutCompany}</dd>
+          <dt className="font-medium text-whitish/90">Description</dt>
+          <dd className="text-whitish/75 sm:col-span-2 capitalize">{desc}</dd>
         </div>
       </dl>
     </div>
@@ -86,11 +57,7 @@ JobDetailsTable.propTypes = {
   employmentType: PropTypes.string.isRequired,
   experienceLevel: PropTypes.string.isRequired,
   category: PropTypes.string.isRequired,
-  industries: PropTypes.string.isRequired,
-  qualifications: PropTypes.string.isRequired,
-  responsibilities: PropTypes.string.isRequired,
-  jobFunctions: PropTypes.string.isRequired,
-  aboutCompany: PropTypes.string.isRequired,
+  desc: PropTypes.string.isRequired,
 };
 
 export default JobDetailsTable;
