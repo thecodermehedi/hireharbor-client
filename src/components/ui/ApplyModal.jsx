@@ -153,7 +153,7 @@ const ApplyModal = ({job}) => {
                 type="submit"
                 className=" text-blackish font-semibold py-2 rounded-2xl bg-primary hover:bg-opacity-80 transition text-base md:text-xl normal-case"
               >
-                Submit
+                Send Application
               </button>
               <button
                 type="button"
