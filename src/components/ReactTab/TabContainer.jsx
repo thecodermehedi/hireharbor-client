@@ -42,9 +42,17 @@ const TabContainer = () => {
   // console.log(jobs);
   return (
     <section>
-      {
-
-      }
+      <div className="lg:w-fit bg-neutral p-2 rounded-2xl hidden md:flex gap-4">
+        {categories?.map((cat, index) => (
+          <Tab
+            key={cat._id}
+            name={cat.name}
+            index={index}
+            setActiveTab={setActiveTab}
+            activeTab={activeTab}
+          />
+        ))}
+      </div>
       <div className="block md:hidden">
         <select
           className="select border-none bg-primary/10 focus:outline-none border-2 rounded-2xl w-full max-w-xs"
