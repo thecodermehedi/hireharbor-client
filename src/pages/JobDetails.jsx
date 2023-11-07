@@ -18,7 +18,7 @@ const JobDetails = () => {
     isError,
     error,
   } = useQuery({
-    queryKey: ["job", {id}],
+    queryKey: ["job", id],
     queryFn: getJob,
   });
 
@@ -42,15 +42,11 @@ const JobDetails = () => {
     posted,
     category,
     location,
-    aboutCompany,
     applicants,
     deadline,
     employmentType,
     experienceLevel,
-    industries,
-    jobFunctions,
-    qualifications,
-    responsibilities,
+    desc,
     salary,
   } = job;
 
@@ -73,11 +69,7 @@ const JobDetails = () => {
         employmentType={employmentType}
         experienceLevel={experienceLevel}
         category={category}
-        industries={industries}
-        qualifications={qualifications}
-        responsibilities={responsibilities}
-        jobFunctions={jobFunctions}
-        aboutCompany={aboutCompany}
+        desc={desc}
       />
       <ApplyModal job={job} />
     </section>
