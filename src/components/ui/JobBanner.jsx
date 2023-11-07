@@ -9,7 +9,6 @@ const JobBanner = ({
   salary,
   deadline,
   applicants,
-  hanldeApply,
 }) => {
   return (
     <>
@@ -42,12 +41,6 @@ const JobBanner = ({
         <p className="md:text-lg lg:text-xl">
           Applicants: <span className="text-blue-500">{applicants}</span>
         </p>
-        <button
-          onClick={hanldeApply}
-          className="bg-primary text-blackish font-bold hover:bg-primary/80 py-2 px-4 rounded-2xl"
-        >
-          Apply Now
-        </button>
       </div>
     </>
   );
@@ -62,7 +55,6 @@ JobBanner.propTypes = {
   salary: PropTypes.string.isRequired,
   deadline: PropTypes.string.isRequired,
   applicants: PropTypes.number.isRequired,
-  hanldeApply: PropTypes.func.isRequired,
 };
 
 export default JobBanner;
