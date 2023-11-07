@@ -27,7 +27,7 @@ const Navbar = () => {
   };
   return (
     <nav>
-      <div className="container mx-auto navbar">
+      <div className="container mx-auto navbar my-5">
         <div className="navbar-start">
           <div className="dropdown md:mr-5 lg:mr-0">
             <label tabIndex={0} className="btn border-none lg:hidden">
@@ -54,7 +54,7 @@ const Navbar = () => {
             </ul>
           </div>
           <Link className="flex-none">
-            <img src="logo.svg" alt="HireHarbor" className="w-44 md:w-56" />
+            <img src="/logo.svg" alt="HireHarbor" className="w-44 md:w-56" />
           </Link>
         </div>
         <div className="navbar-center hidden lg:flex">
