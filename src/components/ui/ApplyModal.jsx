@@ -3,7 +3,7 @@ import useAuth from "../../hooks/useAuth";
 import toast from "react-hot-toast";
 import PropTypes from "prop-types";
 import useAxios from "../../hooks/useAxios";
-import {useMutation} from "@tanstack/react-query";
+import {useQuery, useQueryClient, useMutation} from "@tanstack/react-query";
 
 const ApplyModal = ({job}) => {
   const {
@@ -24,7 +24,7 @@ const ApplyModal = ({job}) => {
   const modalRef = useRef(null);
   const [resumeLink, setResumeLink] = useState("");
   const axios = useAxios();
-
+  const queryClient = useQueryClient();
   const addApplicant = async (application) => {
     const res = await axios.post("/applications", application);
     return res.data;
@@ -41,6 +41,9 @@ const ApplyModal = ({job}) => {
 
   const {mutateAsync: updateJobFn} = useMutation({
     mutationFn: updateJob,
+    onSuccess: () => {
+      queryClient.invalidateQueries({queryKey: ["job", _id]});
+    },
   });
 
   const handleApply = async (e) => {
