@@ -2,7 +2,7 @@ import PropTypes from "prop-types";
 
 const JobsBanner = ({handleJobSearch}) => {
   return (
-    <div className="hero h-96 bg-base-200">
+    <div className="hero h-96">
       <div className="hero-content text-center">
         <div className="max-w-md md:max-w-xl lg:max-w-2xl">
           <h1 className="text-3xl md:text-5xl font-bold">
