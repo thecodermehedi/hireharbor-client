@@ -1,8 +1,13 @@
+import BannerComponent from "../components/ui/BannerComponent";
+
 const Blogs = () => {
   return (
-    <div>
-      <h1>Blogs</h1>
-    </div>
+    <section>
+      <BannerComponent
+        title="Explore Our Blogs"
+        subTitle="Dive into a world of knowledge and insights"
+      />
+    </section>
   );
 };
 
