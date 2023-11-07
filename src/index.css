@@ -4,3 +4,41 @@
 @tailwind components;
 @tailwind utilities;
 
+.react-datepicker {
+  background-color: #0E1110;
+  border: none;
+}
+
+.react-datepicker__header {
+  background-color: #060908;
+  border: none;
+}
+
+.react-datepicker__current-month {
+  color: #fff;
+}
+
+.react-datepicker__day:hover {
+  background-color: #1eb854;
+}
+
+.react-datepicker__day-name, .react-datepicker__day, .react-datepicker__time-name {
+  color: #fff;
+}
+
+.react-datepicker__day--selected, .react-datepicker__day--in-selecting-range, .react-datepicker__day--in-range {
+  background-color: #1eb854;
+  color: #fff;
+}
+
+.react-datepicker__navigation--previous, .react-datepicker__navigation--next {
+  top: 15px;
+}
+
+.react-datepicker__navigation--previous {
+  border-right-color: #fff;
+}
+
+.react-datepicker__navigation--next {
+  border-left-color: #fff;
+}
