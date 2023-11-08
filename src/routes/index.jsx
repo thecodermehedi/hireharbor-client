@@ -11,6 +11,8 @@ import PostedJobs from "../pages/PostedJobs";
 import AppliedJobs from "../pages/AppliedJobs";
 import JobDetails from "../pages/JobDetails";
 import UpdateJob from "../pages/UpdateJob";
+import PrivateRoute from "./PrivateRoute";
+import BlockRoute from "./BlockRoute";
 
 const router = createBrowserRouter([
   {
@@ -24,15 +26,27 @@ const router = createBrowserRouter([
       },
       {
         path: "/login",
-        element: <Login />,
+        element: (
+          <BlockRoute>
+            <Login />
+          </BlockRoute>
+        ),
       },
       {
         path: "/register",
-        element: <Register />,
+        element: (
+          <BlockRoute>
+            <Register />
+          </BlockRoute>
+        ),
       },
       {
         path: "/job/:slug/:id",
-        element: <JobDetails />,
+        element: (
+          <PrivateRoute>
+            <JobDetails />
+          </PrivateRoute>
+        ),
       },
       {
         path: "/blogs",
@@ -44,19 +58,35 @@ const router = createBrowserRouter([
       },
       {
         path: "/addjob",
-        element: <AddJob />,
+        element: (
+          <PrivateRoute>
+            <AddJob />
+          </PrivateRoute>
+        ),
       },
       {
         path: "/updatejob/:id",
-        element: <UpdateJob />,
+        element: (
+          <PrivateRoute>
+            <UpdateJob />
+          </PrivateRoute>
+        ),
       },
       {
         path: "/postedjobs",
-        element: <PostedJobs />,
+        element: (
+          <PrivateRoute>
+            <PostedJobs />
+          </PrivateRoute>
+        ),
       },
       {
         path: "/appliedjobs",
-        element: <AppliedJobs />,
+        element: (
+          <PrivateRoute>
+            <AppliedJobs />
+          </PrivateRoute>
+        ),
       },
     ],
   },
