@@ -233,20 +233,25 @@ const Blogs = () => {
                 Explaining HireHarbor Client Code :
               </h2>
               <p className="mb-5 font-light text-gray-500">
-                <span className="text-primary ">An access token</span> is a
-                credential that can be used by an application to access an API.
-                It informs the API that the bearer of the token has been
-                authorized to access the API and perform specific actions
-                specified by the scope that has been granted.
-                <br />
-                <br />
-                On the other hand, a{" "}
-                <span className="text-primary ">refresh token</span> is a
-                special kind of token that can be used to obtain a renewed
-                access token. This is useful for extending the session of a user
-                without asking them to re-authenticate. When the access token
-                expires, the application can use the refresh token to get a new
-                access token, allowing the user to continue their session.
+                The HireHarbor project is a comprehensive job-finding platform
+                built with modern technologies. It uses React, a popular
+                JavaScript library for building user interfaces, which allows
+                for efficient, reusable components. The project leverages
+                Tanstack Query for managing and updating server data, reducing
+                the need for global state management. Navigation within the
+                application is handled by React Router Dom, providing seamless
+                transitions between different views. User interfaces are
+                enhanced with React Icons and React Datepicker, while user
+                feedback is managed through React Hot Toast and SweetAlert2. The
+                project also uses Firebase for user authentication and database
+                management, and Axios for making HTTP requests to the backend.
+                The styling of the application is handled by Tailwind CSS, a
+                utility-first CSS framework, and DaisyUI, a plugin that extends
+                Tailwind&#39;s functionality. The code snippet provided shows a
+                part of the Blogs component, where a blog article is being
+                rendered with specific styling provided by Tailwind CSS. The
+                project is built with a focus on performance and user
+                experience, using the most modern tools and technologies.
               </p>
               <div className="flex justify-between items-center">
                 <div className="flex items-center space-x-4">
