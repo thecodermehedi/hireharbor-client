@@ -4,7 +4,6 @@ const JobDetailsTable = ({
   posted,
   poster,
   postermail,
-  employmentType,
   experienceLevel,
   category,
   desc,
@@ -28,10 +27,6 @@ const JobDetailsTable = ({
         </div>
 
         <div className="grid grid-cols-1 gap-1 p-3 even:bg-neutral sm:grid-cols-3 sm:gap-4">
-          <dt className="font-medium text-whitish/90">Employment</dt>
-          <dd className="text-whitish/75 sm:col-span-2">{employmentType}</dd>
-        </div>
-        <div className="grid grid-cols-1 gap-1 p-3 even:bg-neutral sm:grid-cols-3 sm:gap-4">
           <dt className="font-medium text-whitish/90">Experience</dt>
           <dd className="text-whitish/75 sm:col-span-2">{experienceLevel}</dd>
         </div>
@@ -54,7 +49,6 @@ JobDetailsTable.propTypes = {
   posted: PropTypes.string.isRequired,
   poster: PropTypes.string.isRequired,
   postermail: PropTypes.string.isRequired,
-  employmentType: PropTypes.string.isRequired,
   experienceLevel: PropTypes.string.isRequired,
   category: PropTypes.string.isRequired,
   desc: PropTypes.string.isRequired,
