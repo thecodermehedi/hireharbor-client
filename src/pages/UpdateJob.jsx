@@ -6,12 +6,15 @@ import useAxios from "../hooks/useAxios";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 import toast from "react-hot-toast";
+import Loading from "../components/Loading";
+import {Helmet} from "react-helmet-async";
 const UpdateJob = () => {
   const {id} = useParams();
   const axios = useAxios();
   const queryClient = useQueryClient();
-  const [updatedDeadline, setUpdatedDeadline] = useState(new Date());
   const [updatedCategory, setUpdatedCategory] = useState();
+  const [updatedDeadline, setUpdatedDeadline] = useState(new Date());
+
   const getJobCategories = async () => {
     const res = await axios.get("/categories");
     return res.data;
@@ -23,7 +26,6 @@ const UpdateJob = () => {
 
   const getJob = async () => {
     const res = await axios.get(`/job/${id}`);
-    console.log("getJob response:", res.data);
     return res.data;
   };
 
@@ -50,7 +52,7 @@ const UpdateJob = () => {
   });
 
   if (isJobLoading) {
-    return  <span className="loading loading-ring loading-lg text-primary/75"></span>;
+    return <Loading />;
   }
 
   if (isJobError) {
@@ -71,7 +73,7 @@ const UpdateJob = () => {
     desc,
   } = job;
 
-  const reverseDeadline = new Date(deadline);
+  const formattedDate = updatedDeadline.toISOString().slice(0, 10);
 
   const handleUpdateJob = async (e) => {
     e.preventDefault();
@@ -81,7 +83,7 @@ const UpdateJob = () => {
       logo: form.logoURL.value,
       banner: form.bannerURL.value,
       title: form.jobTitle.value,
-      deadline: updatedDeadline,
+      deadline: formattedDate,
       applicants: form.applicants.value,
       salary: form.salaryRange.value,
       category: updatedCategory,
@@ -102,6 +104,9 @@ const UpdateJob = () => {
 
   return (
     <section>
+      <Helmet>
+        <title>Update Job - HireHarbor</title>
+      </Helmet>
       <BannerComponent
         title="Revise Your Job Posting"
         subTitle="Update details to attract the right candidates"
@@ -152,7 +157,9 @@ const UpdateJob = () => {
                   htmlFor="category"
                 >
                   Select Category{" "}
-                  <span className="text-primary text-xs md:text-base lg:text-xl">(Current: {category})</span>
+                  <span className="text-primary text-xs md:text-base lg:text-xl">
+                    (Current: {category})
+                  </span>
                 </label>
                 <select
                   className="select w-full rounded-2xl py-3 px-4 bg-neutral focus:outline-none border-none"
@@ -236,10 +243,13 @@ const UpdateJob = () => {
                   className="block  text-xl text-opacity-80  font-semibold mb-2"
                   htmlFor="deadline"
                 >
-                  Deadline
+                  Deadline{" "}
+                  <span className="text-primary text-xs md:text-base lg:text-xl">
+                    (Current: {deadline})
+                  </span>
                 </label>
                 <DatePicker
-                  selected={reverseDeadline}
+                  selected={updatedDeadline}
                   onChange={(date) => setUpdatedDeadline(date)}
                   className="w-full  rounded-2xl   py-3 px-4 bg-neutral  focus:outline-none cursor-pointer"
                 />
