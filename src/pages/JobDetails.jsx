@@ -4,6 +4,8 @@ import useAxios from "../hooks/useAxios";
 import JobBanner from "../components/ui/JobBanner";
 import JobDetailsTable from "../components/ui/JobDetailsTable";
 import ApplyModal from "../components/ui/ApplyModal";
+import Loading from "../components/Loading";
+import { Helmet } from "react-helmet-async";
 
 const JobDetails = () => {
   const {id} = useParams();
@@ -22,10 +24,9 @@ const JobDetails = () => {
     queryFn: getJob,
   });
 
-  // console.log(job);
 
   if (isLoading) {
-    return <div>Loading...</div>;
+    return <Loading />;
   }
 
   if (isError) {
@@ -51,6 +52,9 @@ const JobDetails = () => {
 
   return (
     <section className="container  lg:mx-auto min-h-screen">
+      <Helmet>
+        <title>{title} - HireHarbor</title>
+      </Helmet>
       <JobBanner
         banner={banner}
         logo={logo}
