@@ -53,26 +53,24 @@ const Footer = () => {
             </div>
 
             <div className="text-center sm:text-left">
-              <p className="text-lg font-medium text-primary/70">
-                Our Services
-              </p>
+              <p className="text-lg font-medium text-primary/70">Legal</p>
 
               <ul className="mt-8 space-y-4 text-sm">
                 <li>
                   <Link className="text-whitish/40 transition hover:text-whitish/75">
-                    Company History
+                    Terms of Use
                   </Link>
                 </li>
 
                 <li>
                   <Link className="text-whitish/40 transition hover:text-whitish/75">
-                    Meet the Team
+                    Privacy Policy
                   </Link>
                 </li>
 
                 <li>
                   <Link className="text-whitish/40 transition hover:text-whitish/75">
-                    Employee Handbook
+                    Cookie Policy
                   </Link>
                 </li>
 
@@ -89,26 +87,28 @@ const Footer = () => {
 
               <ul className="mt-8 space-y-4 text-sm">
                 <li>
-                  <Link className="text-whitish/40 transition hover:text-whitish/75">
-                    Company History
+                  <Link
+                    to={"/"}
+                    className="text-whitish/40 transition hover:text-whitish/75"
+                  >
+                    Home
                   </Link>
                 </li>
 
                 <li>
-                  <Link className="text-whitish/40 transition hover:text-whitish/75">
-                    Meet the Team
+                  <Link
+                    to={"/jobs"}
+                    className="text-whitish/40 transition hover:text-whitish/75"
+                  >
+                    All Jobs
                   </Link>
                 </li>
-
                 <li>
-                  <Link className="text-whitish/40 transition hover:text-whitish/75">
-                    Employee Handbook
-                  </Link>
-                </li>
-
-                <li>
-                  <Link className="text-whitish/40 transition hover:text-whitish/75">
-                    Careers
+                  <Link
+                    to={"/blogs"}
+                    className="text-whitish/40 transition hover:text-whitish/75"
+                  >
+                    Blogs
                   </Link>
                 </li>
               </ul>
@@ -116,28 +116,22 @@ const Footer = () => {
             <div className="text-center sm:text-left">
               <p className="text-lg font-medium text-primary/70">Contact Us</p>
 
-              <ul className="mt-8 space-y-4 text-sm">
+              <ul className="mt-8 space-y-4 text-xs">
                 <li>
                   <Link className="text-whitish/40 transition hover:text-whitish/75">
-                    Company History
+                    Address :65 Sunset CA 90026, USA
                   </Link>
                 </li>
 
                 <li>
                   <Link className="text-whitish/40 transition hover:text-whitish/75">
-                    Meet the Team
+                    Email :example@max.com
                   </Link>
                 </li>
 
                 <li>
                   <Link className="text-whitish/40 transition hover:text-whitish/75">
-                    Employee Handbook
-                  </Link>
-                </li>
-
-                <li>
-                  <Link className="text-whitish/40 transition hover:text-whitish/75">
-                    Careers
+                    Call :555-555-1234
                   </Link>
                 </li>
               </ul>
