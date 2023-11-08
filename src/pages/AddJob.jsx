@@ -1,11 +1,11 @@
 import BannerComponent from "../components/ui/BannerComponent";
-import DatePicker from "react-datepicker";
 import {useState} from "react";
-import "react-datepicker/dist/react-datepicker.css";
 import {useMutation, useQuery, useQueryClient} from "@tanstack/react-query";
 import useAxios from "../hooks/useAxios";
 import useAuth from "../hooks/useAuth";
 import toast from "react-hot-toast";
+import DatePicker from "react-datepicker";
+import "react-datepicker/dist/react-datepicker.css";
 const AddJob = () => {
   const [deadline, setDeadline] = useState(new Date());
   const [category, setCategory] = useState("");
@@ -17,12 +17,7 @@ const AddJob = () => {
     const res = await axios.get("/categories");
     return res.data;
   };
-  const {
-    data: categories,
-    isLoading: isCatLoading,
-    isError: isCatError,
-    error: catError,
-  } = useQuery({
+  const {data: categories} = useQuery({
     queryKey: ["categories"],
     queryFn: getJobCategories,
   });
@@ -37,7 +32,7 @@ const AddJob = () => {
     return res.data;
   };
 
-  const {mutateAsync, isLoading, isError, error} = useMutation({
+  const {mutateAsync: postJobFn} = useMutation({
     mutationFn: postJob,
     onSuccess: () => {
       queryClient.invalidateQueries({queryKey: ["jobs"]});
@@ -51,8 +46,8 @@ const AddJob = () => {
       company: form.companyName.value,
       logo: form.logoURL.value,
       banner: form.bannerURL.value,
-      poster: form.yourName.value,
-      postermail: form.yourEmail.value,
+      poster: user?.displayName,
+      postermail: user?.email,
       title: form.jobTitle.value,
       posted: formattedDate,
       deadline: deadline,
@@ -65,7 +60,7 @@ const AddJob = () => {
     };
 
     try {
-      await mutateAsync(job);
+      await postJobFn(job);
       toast.success("Job Posted Successfully");
       form.reset();
     } catch (err) {
