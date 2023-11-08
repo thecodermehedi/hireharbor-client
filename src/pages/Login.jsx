@@ -1,21 +1,23 @@
-import {Link, useNavigate} from "react-router-dom";
+import {Link, useLocation, useNavigate} from "react-router-dom";
 import {FaEye, FaEyeSlash} from "react-icons/fa6";
 import {useState} from "react";
 import toast from "react-hot-toast";
 import useAuth from "../hooks/useAuth";
+import { Helmet } from "react-helmet-async";
 
 const Login = () => {
-  const {login, loginWithGoogle} = useAuth();
+  const {login, loginWithGoogle, setIsLoading} = useAuth();
   const [showPassword, setShowPassword] = useState(false);
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const location = useLocation();
   const navigate = useNavigate();
   const handleLogIn = async (e) => {
     e.preventDefault();
     const toastId = toast.loading("Logging in ...");
     try {
       await login(email, password);
-      navigate("/");
+      location?.state ? navigate(location.state) : navigate("/");
       toast.success("Logged in", {id: toastId});
     } catch (error) {
       toast.error(
@@ -25,6 +27,7 @@ const Login = () => {
         {id: toastId}
       );
     }
+    setIsLoading(false);
   };
   const handleGoogleLogin = async () => {
     const toastId = toast.loading("Logging in ...");
@@ -38,6 +41,9 @@ const Login = () => {
   };
   return (
     <section className="container h-full px-6 py-24">
+      <Helmet>
+        <title>Login - HireHarbor</title>
+      </Helmet>
       <div className="g-6 flex h-full flex-wrap items-center justify-center lg:justify-between">
         <div className="mb-12 md:mb-0 hidden lg:block md:w-8/12 lg:w-6/12">
           <img
