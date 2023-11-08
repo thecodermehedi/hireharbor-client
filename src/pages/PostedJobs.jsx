@@ -3,7 +3,9 @@ import {useQuery, useMutation, useQueryClient} from "@tanstack/react-query";
 import useAxios from "../hooks/useAxios";
 import useAuth from "../hooks/useAuth";
 import PostedJobRow from "../components/PostedJobRow";
-import toast from "react-hot-toast";
+import Swal from "sweetalert2";
+import Loading from "../components/Loading";
+import { Helmet } from "react-helmet-async";
 
 const PostedJobs = () => {
   const axios = useAxios();
@@ -38,17 +40,60 @@ const PostedJobs = () => {
     },
   });
 
-  const handleDeletePostedJob = async (id) => {
-    try {
-      await deletePostedJobFn(id);
-      toast.success("Job deleted successfully");
-    } catch (error) {
-      toast.error(error.message);
-    }
+  const handleDeletePostedJob = (id) => {
+    Swal.fire({
+      title: "Confirm Deletion",
+      text: "Are you sure you want to delete this job ?",
+      icon: "warning",
+      color: "#F2F2F2",
+      iconColor: "#d33",
+      showCancelButton: true,
+      cancelButtonColor: "#1eb854",
+      cancelButtonText: "No Cancel",
+      confirmButtonColor: "#d33",
+      confirmButtonText: "Yes Delete",
+      background: "#060908",
+      reverseButtons: true,
+    }).then(async (result) => {
+      if (result.isConfirmed) {
+        try {
+          await deletePostedJobFn(id);
+          Swal.fire({
+            title: "Deleted!",
+            text: "Job deleted successfully",
+            icon: "success",
+            color: "#F2F2F2",
+            background: "#060908",
+            iconColor: "#1eb854",
+            confirmButtonColor: "#1eb854",
+          });
+        } catch (error) {
+          Swal.fire({
+            icon: "error",
+            title: "Oops...",
+            text: `${error.message}`,
+            color: "#F2F2F2",
+            background: "#060908",
+            iconColor: "#d33",
+            confirmButtonColor: "#d33",
+          });
+        }
+      }
+    });
   };
+
+  if (isPostedJobsLoading) {
+    return <Loading />;
+  }
+  if (isPostedJobsError) {
+    return <p>{postedJobsError.message}</p>;
+  }
 
   return (
     <section className="container mx-auto">
+      <Helmet>
+        <title>My Jobs - HireHarbor</title>
+      </Helmet>
       <BannerComponent
         title="Your Job Postings"
         subTitle="Manage and track your active job listings"
@@ -68,20 +113,14 @@ const PostedJobs = () => {
               </tr>
             </thead>
             <tbody>
-              {isPostedJobsLoading ? (
-                <span className="loading loading-ring loading-lg text-primary/75"></span>
-              ) : isPostedJobsError ? (
-                <p>{postedJobsError.message}</p>
-              ) : (
-                postedJobs?.map((job, index) => (
-                  <PostedJobRow
-                    key={job._id}
-                    job={job}
-                    isEvenRow={index % 2 === 0}
-                    handleDeletePostedJob={handleDeletePostedJob}
-                  />
-                ))
-              )}
+              {postedJobs?.map((job, index) => (
+                <PostedJobRow
+                  key={job._id}
+                  job={job}
+                  isEvenRow={index % 2 === 0}
+                  handleDeletePostedJob={handleDeletePostedJob}
+                />
+              ))}
             </tbody>
           </table>
         </div>
