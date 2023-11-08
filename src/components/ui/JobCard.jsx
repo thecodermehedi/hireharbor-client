@@ -4,7 +4,6 @@ import createSlug from "../../utils/createSlug";
 
 const JobCard = ({job}) => {
   const {_id, title, poster, posted, deadline, salary, applicants} = job;
-  // console.log(salary);
   const slug = createSlug(title);
   return (
     <div className="bg-black rounded-2xl p-5 w-full">
