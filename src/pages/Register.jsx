@@ -3,6 +3,7 @@ import {FaEye, FaEyeSlash} from "react-icons/fa6";
 import {useState} from "react";
 import useAuth from "../hooks/useAuth";
 import toast from "react-hot-toast";
+import { Helmet } from "react-helmet-async";
 
 const Register = () => {
   const [showPassword, setShowPassword] = useState(false);
@@ -16,7 +17,6 @@ const Register = () => {
   const navigate = useNavigate();
   const handleRegister = async (e) => {
     e.preventDefault();
-    // console.log(name, email, password, confirmPass, photoURL);
     if (password !== confirmPass) {
       toast.error("Passwords do not match");
       return;
@@ -27,7 +27,6 @@ const Register = () => {
       await updateUser(name, photoURL);
       navigate("/");
       toast.success(`Welcome ${name}`, {id: toastId});
-      setIsLoading(false);
     } catch (error) {
       toast.error(
         error.message === "Firebase: Error (auth/email-already-in-use)."
@@ -37,6 +36,7 @@ const Register = () => {
       );
       console.log(error);
     }
+    setIsLoading(false);
   };
 
   const handleGoogleLogin = async () => {
@@ -51,6 +51,9 @@ const Register = () => {
 
   return (
     <section className="container h-full px-6 py-10">
+      <Helmet>
+        <title>Register - HireHarbor</title>
+      </Helmet>
       <div className="g-6 flex h-full flex-wrap items-center justify-center lg:justify-between">
         <div className="mb-12 md:mb-0 hidden lg:block md:w-8/12 lg:w-6/12">
           <img src="/signup.svg" className="w-full" alt="login-image" />
