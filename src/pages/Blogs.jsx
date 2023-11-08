@@ -1,9 +1,17 @@
 import {Link} from "react-router-dom";
 import BannerComponent from "../components/ui/BannerComponent";
+import {Helmet} from "react-helmet-async";
 
 const Blogs = () => {
   return (
     <section>
+      <Helmet>
+        <title>Blogs - HireHarbor</title>
+        <meta
+          name="description"
+          content="Explore our blogs and dive into a world of knowledge and insights."
+        />
+      </Helmet>
       <BannerComponent
         title="Explore Our Blogs"
         subTitle="Dive into a world of knowledge and insights"
@@ -222,7 +230,7 @@ const Blogs = () => {
                 <span className="text-sm text-primary">November 08, 2023</span>
               </div>
               <h2 className="mb-2 text-2xl font-bold tracking-tight text-white">
-                What is an access token and refresh token?
+                Explaining HireHarbor Client Code :
               </h2>
               <p className="mb-5 font-light text-gray-500">
                 <span className="text-primary ">An access token</span> is a
