@@ -4,14 +4,20 @@ import useAuth from "../../hooks/useAuth";
 import toast from "react-hot-toast";
 import {IoSettingsOutline, IoLogOutOutline} from "react-icons/io5";
 import Loading from "../Loading";
-
+import useAxios from "../../hooks/useAxios";
 const Navbar = () => {
   const {user, logout, isLoading} = useAuth();
-
+  const axios = useAxios();
+  const removeJWT = async (user) => {
+    const res = await axios.post("/auth/logout", user);
+    return res.data;
+  };
+  const sendUser = {email: user?.email};
   const handleLogout = async () => {
     const toastId = toast.loading("Logging out...");
     try {
       await logout();
+      await removeJWT(sendUser);
       toast.success("Logged out", {id: toastId});
     } catch (error) {
       toast.error(error.message, {id: toastId});
