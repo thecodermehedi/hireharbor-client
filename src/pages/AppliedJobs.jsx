@@ -4,6 +4,8 @@ import useAxios from "../hooks/useAxios";
 import useAuth from "../hooks/useAuth";
 import AppliedJobRow from "../components/AppliedJobRow";
 import {useState} from "react";
+import Loading from "../components/Loading";
+import { Helmet } from "react-helmet-async";
 
 const AppliedJobs = () => {
   const axios = useAxios();
@@ -38,19 +40,19 @@ const AppliedJobs = () => {
   let filteredJobs = appliedJobs;
   if (category !== "") {
     filteredJobs = appliedJobs.filter((job) => job.category === category);
-    console.log(filteredJobs);
   }
 
   if (isAppliedJobsLoading) {
-    return (
-      <span className="loading loading-ring loading-lg text-primary/75"></span>
-    );
+    return <Loading />;
   }
   if (isAppliedJobsError) {
     return <p>{jobsError.message}</p>;
   }
   return (
     <section className="container mx-auto ">
+      <Helmet>
+        <title>Applied Jobs - HireHarbor</title>
+      </Helmet>
       <BannerComponent
         title="Your Job Applications"
         subTitle="Track the progress of your career pursuits"
