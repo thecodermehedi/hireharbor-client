@@ -5,7 +5,6 @@ import toast from "react-hot-toast";
 import Loading from "../components/Loading";
 
 const PrivateRoute = ({children}) => {
-  console.log("PrivateRoute rendered");
   const {user, isLoading} = useAuth();
   const location = useLocation();
   if (isLoading) {
