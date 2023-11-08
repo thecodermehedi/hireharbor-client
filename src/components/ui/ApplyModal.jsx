@@ -3,20 +3,18 @@ import useAuth from "../../hooks/useAuth";
 import toast from "react-hot-toast";
 import PropTypes from "prop-types";
 import useAxios from "../../hooks/useAxios";
-import {useQuery, useQueryClient, useMutation} from "@tanstack/react-query";
+import {useQueryClient, useMutation} from "@tanstack/react-query";
 
 const ApplyModal = ({job}) => {
   const {
     _id,
     company,
     title,
-    poster,
     postermail,
-    posted,
     category,
     location,
     deadline,
-    employmentType,
+
     experienceLevel,
     salary,
   } = job;
@@ -68,19 +66,17 @@ const ApplyModal = ({job}) => {
       resumeLink,
       company,
       title,
-      poster,
-      postermail,
-      posted,
       category,
       location,
       deadline,
-      employmentType,
       experienceLevel,
       salary,
     };
 
     console.log(_id);
     console.log(application);
+
+    const toastId = toast.loading("Sending application...");
 
     try {
       await addApplicantFn(application);
@@ -91,7 +87,7 @@ const ApplyModal = ({job}) => {
 
     try {
       await updateJobFn(_id);
-      toast.success("Application submitted successfully");
+      toast.success("Application submitted successfully", {id: toastId});
       closeModal();
     } catch (error) {
       toast.error(`Failed to update job: ${error.message}`);
