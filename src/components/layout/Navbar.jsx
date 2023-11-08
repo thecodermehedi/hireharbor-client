@@ -2,18 +2,11 @@ import {Link} from "react-router-dom";
 import NavLinks from "../NavLinks";
 import useAuth from "../../hooks/useAuth";
 import toast from "react-hot-toast";
-import {useEffect, useState} from "react";
 import {IoSettingsOutline, IoLogOutOutline} from "react-icons/io5";
+import Loading from "../Loading";
 
 const Navbar = () => {
-  const {user, logout} = useAuth();
-  const [miniLoading, setMiniLoading] = useState(true);
-
-  useEffect(() => {
-    setTimeout(() => {
-      setMiniLoading(false);
-    }, 2500);
-  }, [setMiniLoading, user]);
+  const {user, logout, isLoading} = useAuth();
 
   const handleLogout = async () => {
     const toastId = toast.loading("Logging out...");
@@ -25,6 +18,11 @@ const Navbar = () => {
       console.log(error);
     }
   };
+
+  if (isLoading) {
+    return <Loading />;
+  }
+
   return (
     <nav>
       <div className="container mx-auto navbar my-5">
@@ -63,9 +61,7 @@ const Navbar = () => {
           </ul>
         </div>
         <div className="navbar-end">
-          {miniLoading ? (
-            <span className="loading loading-ring loading-lg text-primary/75"></span>
-          ) : user ? (
+          {user ? (
             <div className="dropdown dropdown-end">
               <div
                 className="lg:tooltip lg:tooltip-bottom"
