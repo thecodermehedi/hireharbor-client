@@ -3,9 +3,9 @@ import {useQuery} from "@tanstack/react-query";
 import useAxios from "../../hooks/useAxios";
 import JobCard from "./JobCard";
 import PropTypes from "prop-types";
+import Loading from "../Loading";
 
 const JobsTable = ({searchFieldValue}) => {
-  console.log(searchFieldValue);
   const axios = useAxios();
   const getJobs = async () => {
     const res = await axios.get("/jobs");
@@ -31,8 +31,7 @@ const JobsTable = ({searchFieldValue}) => {
     : jobs;
 
   if (isJobsLoading) {
-    <span className="loading loading-ring loading-lg text-primary/75"></span>;
-    return;
+    return <Loading />;
   }
 
   if (isJobsError) {
