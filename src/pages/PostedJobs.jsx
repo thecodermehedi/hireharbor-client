@@ -5,7 +5,8 @@ import useAuth from "../hooks/useAuth";
 import PostedJobRow from "../components/PostedJobRow";
 import Swal from "sweetalert2";
 import Loading from "../components/Loading";
-import { Helmet } from "react-helmet-async";
+import {Helmet} from "react-helmet-async";
+import ErrorComponent from "../components/ErrorComponent";
 
 const PostedJobs = () => {
   const axios = useAxios();
@@ -86,7 +87,7 @@ const PostedJobs = () => {
     return <Loading />;
   }
   if (isPostedJobsError) {
-    return <p>{postedJobsError.message}</p>;
+    return <ErrorComponent error={postedJobsError} />;
   }
 
   return (

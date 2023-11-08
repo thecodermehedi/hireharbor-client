@@ -6,6 +6,7 @@ import JobDetailsTable from "../components/ui/JobDetailsTable";
 import ApplyModal from "../components/ui/ApplyModal";
 import Loading from "../components/Loading";
 import { Helmet } from "react-helmet-async";
+import ErrorComponent from "../components/ErrorComponent";
 
 const JobDetails = () => {
   const {id} = useParams();
@@ -30,7 +31,7 @@ const JobDetails = () => {
   }
 
   if (isError) {
-    return <div>{error.message}</div>;
+    return <ErrorComponent error={error} />;
   }
 
   const {

@@ -8,6 +8,7 @@ import "react-datepicker/dist/react-datepicker.css";
 import toast from "react-hot-toast";
 import Loading from "../components/Loading";
 import {Helmet} from "react-helmet-async";
+import ErrorComponent from "../components/ErrorComponent";
 const UpdateJob = () => {
   const {id} = useParams();
   const axios = useAxios();
@@ -56,7 +57,7 @@ const UpdateJob = () => {
   }
 
   if (isJobError) {
-    return <div>{jobError.message}</div>;
+    return <ErrorComponent error={jobError} />;
   }
 
   const {

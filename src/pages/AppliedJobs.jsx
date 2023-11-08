@@ -6,6 +6,7 @@ import AppliedJobRow from "../components/AppliedJobRow";
 import {useState} from "react";
 import Loading from "../components/Loading";
 import { Helmet } from "react-helmet-async";
+import ErrorComponent from "../components/ErrorComponent";
 
 const AppliedJobs = () => {
   const axios = useAxios();
@@ -46,7 +47,7 @@ const AppliedJobs = () => {
     return <Loading />;
   }
   if (isAppliedJobsError) {
-    return <p>{jobsError.message}</p>;
+    return <ErrorComponent error={jobsError} />;
   }
   return (
     <section className="container mx-auto ">

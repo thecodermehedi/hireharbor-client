@@ -4,6 +4,7 @@ import useAxios from "../../hooks/useAxios";
 import JobCard from "./JobCard";
 import PropTypes from "prop-types";
 import Loading from "../Loading";
+import ErrorComponent from "../ErrorComponent";
 
 const JobsTable = ({searchFieldValue}) => {
   const axios = useAxios();
@@ -35,7 +36,7 @@ const JobsTable = ({searchFieldValue}) => {
   }
 
   if (isJobsError) {
-    return <span>Error: {jobsError.message}</span>;
+    return <ErrorComponent error={jobsError} />;
   }
 
   return (
