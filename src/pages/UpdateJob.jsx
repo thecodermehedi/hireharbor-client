@@ -1,9 +1,105 @@
 import BannerComponent from "../components/ui/BannerComponent";
-import DatePicker from "react-datepicker";
 import {useState} from "react";
+import {useMutation, useQuery, useQueryClient} from "@tanstack/react-query";
+import {useParams} from "react-router-dom";
+import useAxios from "../hooks/useAxios";
+import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
+import toast from "react-hot-toast";
 const UpdateJob = () => {
-  const [startDate, setStartDate] = useState(new Date());
+  const {id} = useParams();
+  const axios = useAxios();
+  const queryClient = useQueryClient();
+  const [updatedDeadline, setUpdatedDeadline] = useState(new Date());
+  const [updatedCategory, setUpdatedCategory] = useState();
+  const getJobCategories = async () => {
+    const res = await axios.get("/categories");
+    return res.data;
+  };
+  const {data: categories} = useQuery({
+    queryKey: ["categories"],
+    queryFn: getJobCategories,
+  });
+
+  const getJob = async () => {
+    const res = await axios.get(`/job/${id}`);
+    console.log("getJob response:", res.data);
+    return res.data;
+  };
+
+  const {
+    data: job,
+    isLoading: isJobLoading,
+    isError: isJobError,
+    error: jobError,
+  } = useQuery({
+    queryKey: ["job", id],
+    queryFn: async () => await getJob(),
+  });
+
+  const updateJob = async (updatedjob) => {
+    const res = await axios.patch(`/postedjobs/${id}`, updatedjob);
+    return res.data;
+  };
+
+  const {mutateAsync: updateJobFn} = useMutation({
+    mutationFn: updateJob,
+    onSuccess: () => {
+      queryClient.invalidateQueries({queryKey: ["job", id]});
+    },
+  });
+
+  if (isJobLoading) {
+    return  <span className="loading loading-ring loading-lg text-primary/75"></span>;
+  }
+
+  if (isJobError) {
+    return <div>{jobError.message}</div>;
+  }
+
+  const {
+    banner,
+    logo,
+    company,
+    title,
+    category,
+    location,
+    applicants,
+    deadline,
+    experienceLevel,
+    salary,
+    desc,
+  } = job;
+
+  const reverseDeadline = new Date(deadline);
+
+  const handleUpdateJob = async (e) => {
+    e.preventDefault();
+    const form = e.target;
+    const updatedjob = {
+      company: form.companyName.value,
+      logo: form.logoURL.value,
+      banner: form.bannerURL.value,
+      title: form.jobTitle.value,
+      deadline: updatedDeadline,
+      applicants: form.applicants.value,
+      salary: form.salaryRange.value,
+      category: updatedCategory,
+      location: form.location.value,
+      experienceLevel: form.experience.value,
+      desc: form.desc.value,
+    };
+
+    const toastId = toast.loading("Updating...");
+    try {
+      await updateJobFn(updatedjob);
+      toast.success("Job Updated Successfully", {id: toastId});
+    } catch (error) {
+      console.log(error);
+      toast.error(error.message, {id: toastId});
+    }
+  };
+
   return (
     <section>
       <BannerComponent
@@ -13,7 +109,7 @@ const UpdateJob = () => {
       <div className="min-h-fit bg-black">
         <div className="flex flex-col w-full max-w-7xl mx-auto py-10">
           <form
-            // onSubmit={handleAddJob}
+            onSubmit={handleUpdateJob}
             className="px-10 lg:px-28  pt-10 my-8 mx-5 md:mx-0"
           >
             <div className="-mx-3 md:flex mb-6">
@@ -25,31 +121,14 @@ const UpdateJob = () => {
                   Company Name
                 </label>
                 <input
-                  className="w-full   rounded-2xl   placeholder:text-whitish/50 focus:placeholder:text-opacity-0 py-3 px-4 bg-neutral  focus:outline-none "
+                  className="w-full rounded-2xl py-3 px-4 bg-neutral  focus:outline-none "
                   id="companyName"
                   type="text"
-                  placeholder="Enter Company Name"
+                  defaultValue={company}
                   required
                 />
               </div>
               <div className="md:w-1/2 px-3">
-                <label
-                  className="block    text-xl text-opacity-80  font-semibold mb-2"
-                  htmlFor="yourName"
-                >
-                  Your Name
-                </label>
-                <input
-                  className="w-full     rounded-2xl   placeholder:text-whitish/50 focus:placeholder:text-opacity-0 py-3 px-4 bg-neutral  focus:outline-none "
-                  id="yourName"
-                  type="text"
-                  defaultValue={"default"}
-                  readOnly
-                />
-              </div>
-            </div>
-            <div className="-mx-3 md:flex mb-6">
-              <div className="md:w-1/2 px-3 mb-6 md:mb-0">
                 <label
                   className="block    text-xl text-opacity-80  font-semibold mb-2"
                   htmlFor="jobTitle"
@@ -57,46 +136,36 @@ const UpdateJob = () => {
                   Job Title
                 </label>
                 <input
-                  className="w-full     rounded-2xl   placeholder:text-whitish/50 focus:placeholder:text-opacity-0 py-3 px-4 bg-neutral  focus:outline-none "
+                  className="w-full rounded-2xl py-3 px-4 bg-neutral  focus:outline-none "
                   id="jobTitle"
                   type="text"
-                  placeholder="Enter Job Title"
+                  defaultValue={title}
                   required
                 />
               </div>
-              <div className="md:w-1/2 px-3">
-                <label
-                  className="block    text-xl text-opacity-80  font-semibold mb-2"
-                  htmlFor="yourEmail"
-                >
-                  Your Email
-                </label>
-                <input
-                  className="w-full     rounded-2xl   placeholder:text-whitish/50 focus:placeholder:text-opacity-0 py-3 px-4 bg-neutral  focus:outline-none "
-                  id="yourEmail"
-                  type="text"
-                  defaultValue={"default"}
-                  readOnly
-                />
-              </div>
             </div>
+
             <div className="-mx-3 md:flex mb-6">
               <div className="md:w-1/2 px-3 mb-6 md:mb-0">
                 <label
                   className=" block   text-xl text-opacity-80  font-semibold mb-2"
                   htmlFor="category"
                 >
-                  Job Category
+                  Select Category{" "}
+                  <span className="text-primary text-xs md:text-base lg:text-xl">(Current: {category})</span>
                 </label>
                 <select
-                  className="select w-full   rounded-2xl  py-3 px-4 bg-neutral  focus:outline-none border-none"
+                  className="select w-full rounded-2xl py-3 px-4 bg-neutral focus:outline-none border-none"
                   id="category"
+                  value={updatedCategory}
+                  onChange={(e) => setUpdatedCategory(e.target.value)}
                   required
-                  defaultValue={"default"}
                 >
-                  <option disabled value={"default"}>
-                    Select Category
-                  </option>
+                  {categories?.map((cat) => (
+                    <option key={cat._id} value={cat.value}>
+                      {cat.name}
+                    </option>
+                  ))}
                 </select>
               </div>
               <div className="md:w-1/2 px-3">
@@ -107,10 +176,10 @@ const UpdateJob = () => {
                   Salary Range
                 </label>
                 <input
-                  className=" w-full    rounded-2xl   placeholder:text-whitish/50 focus:placeholder:text-opacity-0 py-3 px-4 bg-neutral  focus:outline-none  placeholder:"
+                  className=" w-full    rounded-2xl    py-3 px-4 bg-neutral  focus:outline-none  "
                   id="salaryRange"
                   type="text"
-                  placeholder="Enter Salary Range"
+                  defaultValue={salary}
                   required
                 />
               </div>
@@ -124,10 +193,10 @@ const UpdateJob = () => {
                   Location
                 </label>
                 <input
-                  className="w-full     rounded-2xl   placeholder:text-whitish/50 focus:placeholder:text-opacity-0 py-3 px-4 bg-neutral  focus:outline-none "
+                  className="w-full rounded-2xl py-3 px-4 bg-neutral  focus:outline-none "
                   id="location"
                   type="text"
-                  placeholder="Enter Location"
+                  defaultValue={location}
                   required
                 />
               </div>
@@ -139,10 +208,10 @@ const UpdateJob = () => {
                   Total Applicants
                 </label>
                 <input
-                  className="w-full     rounded-2xl   placeholder:text-whitish/50 focus:placeholder:text-opacity-0 py-3 px-4 bg-neutral  focus:outline-none "
+                  className="w-full rounded-2xl py-3 px-4 bg-neutral  focus:outline-none "
                   id="applicants"
                   type="number"
-                  defaultValue={0}
+                  defaultValue={applicants}
                 />
               </div>
             </div>
@@ -155,23 +224,23 @@ const UpdateJob = () => {
                   Experience Level
                 </label>
                 <input
-                  className="    rounded-2xl placeholder:text-whitish/50 focus:placeholder:text-opacity-0 py-3 px-4 bg-neutral  focus:outline-none "
+                  className="rounded-2xl  py-3 px-4 bg-neutral  focus:outline-none "
                   id="experience"
                   type="text"
-                  placeholder="Enter Experience Level"
+                  defaultValue={experienceLevel}
                   required
                 />
               </div>
               <div className="md:w-1/2 px-3">
                 <label
-                  className="block    text-xl text-opacity-80  font-semibold mb-2"
+                  className="block  text-xl text-opacity-80  font-semibold mb-2"
                   htmlFor="deadline"
                 >
-                  Enter Deadline
+                  Deadline
                 </label>
                 <DatePicker
-                  selected={startDate}
-                  onChange={(date) => setStartDate(date)}
+                  selected={reverseDeadline}
+                  onChange={(date) => setUpdatedDeadline(date)}
                   className="w-full  rounded-2xl   py-3 px-4 bg-neutral  focus:outline-none cursor-pointer"
                 />
               </div>
@@ -185,10 +254,10 @@ const UpdateJob = () => {
                   Company Logo
                 </label>
                 <input
-                  className=" w-full    rounded-2xl   placeholder:text-whitish/50 focus:placeholder:text-opacity-0 py-3 px-4 bg-neutral  focus:outline-none "
+                  className=" w-full rounded-2xl py-3 px-4 bg-neutral  focus:outline-none "
                   id="logoURL"
                   type="url"
-                  placeholder="Enter Company Logo URL"
+                  defaultValue={logo}
                   required
                 />
               </div>
@@ -196,16 +265,16 @@ const UpdateJob = () => {
             <div className="-mx-3 md:flex mb-6">
               <div className="md:w-full px-3">
                 <label
-                  className=" block   text-xl text-opacity-80  font-semibold mb-2"
+                  className=" block text-xl text-opacity-80  font-semibold mb-2"
                   htmlFor="bannerURL"
                 >
                   Job Banner
                 </label>
                 <input
-                  className=" w-full    rounded-2xl   placeholder:text-whitish/50 focus:placeholder:text-opacity-0 py-3 px-4 bg-neutral  focus:outline-none "
+                  className=" w-full rounded-2xl py-3 px-4 bg-neutral  focus:outline-none"
                   id="bannerURL"
                   type="url"
-                  placeholder="Enter Job Banner URL"
+                  defaultValue={banner}
                   required
                 />
               </div>
@@ -213,16 +282,16 @@ const UpdateJob = () => {
             <div className="-mx-3 md:flex mb-6">
               <div className="md:w-full px-3">
                 <label
-                  className=" block   text-xl text-opacity-80  font-semibold mb-2"
+                  className=" block text-xl text-opacity-80  font-semibold mb-2"
                   htmlFor="desc"
                 >
                   Job Description
                 </label>
                 <textarea
-                  className="w-full h-96   rounded-2xl   placeholder:text-whitish/50 focus:placeholder:text-opacity-0 py-3 px-4 bg-neutral  focus:outline-none resize-none overflow-hidden"
+                  className="w-full h-96 rounded-2xl py-3 px-4 bg-neutral  focus:outline-none resize-none overflow-hidden"
                   id="desc"
                   type="url"
-                  placeholder="Enter Job Description"
+                  defaultValue={desc}
                   required
                 />
               </div>
@@ -233,7 +302,7 @@ const UpdateJob = () => {
                   className="btn bg-primary/50 rounded-2xl border-none transition-all duration-300 cursor-pointer  
                   hover: capitalize text-xl hover:bg-primary/70 w-full"
                 >
-                  Publish Job
+                  Update Job
                 </button>
               </div>
             </div>
