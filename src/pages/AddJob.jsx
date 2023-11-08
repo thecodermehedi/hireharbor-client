@@ -6,12 +6,12 @@ import useAuth from "../hooks/useAuth";
 import toast from "react-hot-toast";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
+import {Helmet} from "react-helmet-async";
 const AddJob = () => {
   const [deadline, setDeadline] = useState(new Date());
   const [category, setCategory] = useState("");
   const queryClient = useQueryClient();
   const {user} = useAuth();
-  console.log(category);
   const axios = useAxios();
   const getJobCategories = async () => {
     const res = await axios.get("/categories");
@@ -21,11 +21,9 @@ const AddJob = () => {
     queryKey: ["categories"],
     queryFn: getJobCategories,
   });
-  console.log(categories);
 
   const currentDate = new Date();
   const formattedDate = currentDate.toISOString().slice(0, 10);
-  console.log(formattedDate);
 
   const postJob = async (job) => {
     const res = await axios.post("/jobs", job);
@@ -58,19 +56,26 @@ const AddJob = () => {
       experienceLevel: form.experience.value,
       desc: form.desc.value,
     };
-
+    const toastId = toast.loading("Posting Job...");
     try {
       await postJobFn(job);
-      toast.success("Job Posted Successfully");
+      toast.success("Job Posted Successfully", {id: toastId});
       form.reset();
     } catch (err) {
       console.log(err);
-      toast.error("Something went wrong");
+      toast.error("Something went wrong", {id: toastId});
     }
   };
 
   return (
     <section>
+      <Helmet>
+        <title>Add Job - HireHarbor</title>
+        <meta
+          name="description"
+          content="Add a job to HireHarbor to reach out to the best talents in the industry."
+        />
+      </Helmet>
       <BannerComponent
         title="Post Your Vacancy"
         subTitle="Reach out to the best talents in the industry"
