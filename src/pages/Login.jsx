@@ -3,20 +3,29 @@ import {FaEye, FaEyeSlash} from "react-icons/fa6";
 import {useState} from "react";
 import toast from "react-hot-toast";
 import useAuth from "../hooks/useAuth";
-import { Helmet } from "react-helmet-async";
+import {Helmet} from "react-helmet-async";
+import useAxios from "../hooks/useAxios";
 
 const Login = () => {
   const {login, loginWithGoogle, setIsLoading} = useAuth();
   const [showPassword, setShowPassword] = useState(false);
+  const axios = useAxios();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const location = useLocation();
   const navigate = useNavigate();
+  const getJWT = async (user) => {
+    const res = axios.post("/auth/accesstoken", user);
+    return res.data;
+  };
+
   const handleLogIn = async (e) => {
     e.preventDefault();
     const toastId = toast.loading("Logging in ...");
+    const user = {email: email};
     try {
       await login(email, password);
+      await getJWT(user);
       location?.state ? navigate(location.state) : navigate("/");
       toast.success("Logged in", {id: toastId});
     } catch (error) {
