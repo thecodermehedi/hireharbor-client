@@ -13,17 +13,12 @@ const TabContainer = () => {
   };
   const {
     data: categories,
-    isLoading: isCatLoading,
-    isError: isCatError,
-    error: catError,
   } = useQuery({
     queryKey: ["categories"],
     queryFn: getJobCategories,
   });
 
   const activeCategoryValue = categories?.[activeTab]?.value;
-  // console.log("currenCatValue", activeCategoryValue);
-  // console.log(categories);
   const getJobs = async (category) => {
     const res = await axios.get(`/jobs?category=${category}`);
     return res.data;
@@ -31,15 +26,11 @@ const TabContainer = () => {
 
   const {
     data: jobs,
-    isLoading: isJobsLoading,
-    isError: isJobsError,
-    error: jobsError,
   } = useQuery({
     queryKey: ["jobs", activeCategoryValue],
     queryFn: async () => await getJobs(activeCategoryValue),
     enabled: !!categories,
   });
-  // console.log(jobs);
   return (
     <section>
       <div className="lg:w-fit bg-neutral p-2 rounded-2xl hidden md:flex gap-4">
