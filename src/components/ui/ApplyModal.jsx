@@ -53,8 +53,6 @@ const ApplyModal = ({job}) => {
     const currentDate = new Date();
     const deadlineDate = new Date(deadline);
 
-    console.log(currentDate, deadlineDate);
-
     if (currentDate > deadlineDate) {
       toast.error("The deadline has passed");
       return;
@@ -73,15 +71,12 @@ const ApplyModal = ({job}) => {
       salary,
     };
 
-    console.log(_id);
-    console.log(application);
-
     const toastId = toast.loading("Sending application...");
 
     try {
       await addApplicantFn(application);
     } catch (error) {
-      toast.error(`Failed to add applicant: ${error.message}`);
+      toast.error(`Failed to add applicant: ${error.message}`, {id: toastId});
       return;
     }
 
@@ -90,7 +85,7 @@ const ApplyModal = ({job}) => {
       toast.success("Application submitted successfully", {id: toastId});
       closeModal();
     } catch (error) {
-      toast.error(`Failed to update job: ${error.message}`);
+      toast.error(`Failed to update job: ${error.message}`, {id: toastId});
     }
   };
 
