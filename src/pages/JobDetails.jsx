@@ -44,7 +44,6 @@ const JobDetails = () => {
     location,
     applicants,
     deadline,
-    employmentType,
     experienceLevel,
     desc,
     salary,
@@ -66,7 +65,6 @@ const JobDetails = () => {
         posted={posted}
         poster={poster}
         postermail={postermail}
-        employmentType={employmentType}
         experienceLevel={experienceLevel}
         category={category}
         desc={desc}
