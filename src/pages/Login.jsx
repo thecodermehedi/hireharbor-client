@@ -44,7 +44,7 @@ const Login = () => {
     try {
       await loginWithGoogle();
       toast.success("Logged in", {id: toastId});
-      navigate("/");
+      location?.state ? navigate(location.state) : navigate("/");
     } catch (error) {
       toast.error(error.message, {id: toastId});
     }

@@ -1,4 +1,4 @@
-import {Link, useNavigate} from "react-router-dom";
+import {Link, useLocation, useNavigate} from "react-router-dom";
 import {FaEye, FaEyeSlash} from "react-icons/fa6";
 import {useState} from "react";
 import useAuth from "../hooks/useAuth";
@@ -16,6 +16,7 @@ const Register = () => {
   const [photoURL, setPhotoURL] = useState("https://i.pravatar.cc/300");
   const {register, updateUser, loginWithGoogle, setIsLoading} = useAuth();
   const navigate = useNavigate();
+  const location = useLocation();
   const handleRegister = async (e) => {
     e.preventDefault();
     if (password !== confirmPass) {
@@ -26,7 +27,7 @@ const Register = () => {
     try {
       await register(email, password);
       await updateUser(name, photoURL);
-      navigate("/");
+      location?.state ? navigate(location.state) : navigate("/");
       toast.success(`Welcome ${name}`, {id: toastId});
     } catch (error) {
       toast.error(
@@ -44,6 +45,7 @@ const Register = () => {
     const toastId = toast.loading("Logging in ...");
     try {
       await loginWithGoogle();
+      location?.state ? navigate(location.state) : navigate("/");
       toast.success("Logged in", {id: toastId});
     } catch (error) {
       toast.error(error.message, {id: toastId});
