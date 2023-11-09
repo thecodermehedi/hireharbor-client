@@ -46,7 +46,7 @@ const TabContainer = () => {
       </div>
       <div className="block md:hidden">
         <select
-          className="select border-none bg-primary/10 focus:outline-none border-2 rounded-2xl w-full max-w-xs"
+          className="select border-none bg-primary/10 focus:outline-none rounded-2xl w-full max-w-xs"
           value={activeTab}
           onChange={(e) => setActiveTab(e.target.selectedIndex)}
         >
