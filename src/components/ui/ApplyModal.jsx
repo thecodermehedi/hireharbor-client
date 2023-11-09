@@ -4,6 +4,7 @@ import toast from "react-hot-toast";
 import PropTypes from "prop-types";
 import useAxios from "../../hooks/useAxios";
 import {useQueryClient, useMutation} from "@tanstack/react-query";
+import emailjs from "@emailjs/browser";
 
 const ApplyModal = ({job}) => {
   const {
@@ -14,12 +15,12 @@ const ApplyModal = ({job}) => {
     category,
     location,
     deadline,
-
     experienceLevel,
     salary,
   } = job;
   const {user} = useAuth();
   const modalRef = useRef(null);
+  const applicationForm = useRef(null);
   const [resumeLink, setResumeLink] = useState("");
   const axios = useAxios();
   const queryClient = useQueryClient();
@@ -43,6 +44,16 @@ const ApplyModal = ({job}) => {
       queryClient.invalidateQueries({queryKey: ["job", _id]});
     },
   });
+
+  const sendEmail = (form) => {
+    const result = emailjs.sendForm(
+      "service_hireharbor",
+      "template_hireharbor",
+      form.current,
+      "waOMcBKc8rgIPCuBC"
+    );
+    return result;
+  };
 
   const handleApply = async (e) => {
     e.preventDefault();
@@ -87,6 +98,15 @@ const ApplyModal = ({job}) => {
     } catch (error) {
       toast.error(`Failed to update job: ${error.message}`, {id: toastId});
     }
+
+    sendEmail(applicationForm).then(
+      (result) => {
+        console.log(result.text);
+      },
+      (error) => {
+        console.log(error.text);
+      }
+    );
   };
 
   const openModal = () => {
@@ -117,7 +137,11 @@ const ApplyModal = ({job}) => {
             Press fill in the form below to apply for this job.
           </p>
           <div className="modal-action">
-            <form onSubmit={handleApply} className="flex flex-col gap-2 w-full">
+            <form
+              onSubmit={handleApply}
+              className="flex flex-col gap-2 w-full"
+              ref={applicationForm}
+            >
               <input
                 type="text"
                 name="name"

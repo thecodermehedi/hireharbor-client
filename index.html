@@ -6,8 +6,16 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   </head>
   <body class="bg-blackish text-whitish font-rubik">
-  <!-- <body class="bg-whitish text-blackish font-rubik"> -->
     <div id="root"></div>
     <script type="module" src="/src/main.jsx"></script>
+    <script
+      type="text/javascript"
+      src="https://cdn.jsdelivr.net/npm/@emailjs/browser@3/dist/email.min.js"
+    ></script>
+    <script type="text/javascript">
+      (function () {
+        emailjs.init("waOMcBKc8rgIPCuBC");
+      })();
+    </script>
   </body>
 </html>
