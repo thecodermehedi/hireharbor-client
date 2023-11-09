@@ -3,7 +3,8 @@ import {FaEye, FaEyeSlash} from "react-icons/fa6";
 import {useState} from "react";
 import useAuth from "../hooks/useAuth";
 import toast from "react-hot-toast";
-import { Helmet } from "react-helmet-async";
+import {Helmet} from "react-helmet-async";
+import registerPhoto from "../assets/signup.svg";
 
 const Register = () => {
   const [showPassword, setShowPassword] = useState(false);
@@ -56,7 +57,12 @@ const Register = () => {
       </Helmet>
       <div className="g-6 flex h-full flex-wrap items-center justify-center lg:justify-between">
         <div className="mb-12 md:mb-0 hidden lg:block md:w-8/12 lg:w-6/12">
-          <img src="/signup.svg" className="w-full" alt="login-image" />
+          <img
+            src={registerPhoto}
+            loading="lazy"
+            className="w-full"
+            alt="login-image"
+          />
         </div>
         <div className="md:w-8/12 lg:ml-6 lg:w-5/12 pb-10">
           <h1 className="text-center text-4xl font-bold text-main mb-6">

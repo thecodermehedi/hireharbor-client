@@ -30,7 +30,8 @@ const Banner = () => {
 
           <div className="overflow-y-hidden">
             <img
-              alt="Student"
+              alt="banner"
+              loading="lazy"
               src={bannerPhoto}
               className="h-50 w-full object-cover pt-8 "
             />

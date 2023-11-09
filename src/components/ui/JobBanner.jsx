@@ -13,7 +13,7 @@ const JobBanner = ({
   return (
     <>
       <div className="hero md:h-72 lg:h-96 overflow-hidden border border-t-0 border-b-0 border-gray-900 relative">
-        <img src={banner} alt="banner" className="w-full rounded-2xl" />
+        <img src={banner} loading="lazy" alt="banner" className="w-full rounded-2xl" />
         <img
           src={logo}
           alt="logo"

@@ -54,7 +54,7 @@ const Pricing = () => {
           {plans.map((item, idx) => (
             <div
               key={idx}
-              className={`relative flex-1 flex items-stretch flex-col rounded-3xl border-2 border-primary/20 mt-6 sm:mt-0 hover:shadow-md hover:shadow-primary ${
+              className={`relative flex-1 flex items-stretch flex-col rounded-3xl border-2 border-primary/20 mt-6 sm:mt-0 hover:shadow hover:shadow-primary transition ${
                 item.isMostPop ? "mt-10" : ""
               }`}
             >

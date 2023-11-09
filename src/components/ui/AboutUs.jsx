@@ -7,7 +7,8 @@ const AboutUs = () => {
         <div className="lg:grid lg:grid-cols-2">
           <div className="overflow-y-hidden">
             <img
-              alt="Student"
+              alt="banner"
+              loading="lazy"
               src={aboutus}
               className="h-50 w-full object-cover pt-8 "
             />

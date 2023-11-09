@@ -5,6 +5,7 @@ import toast from "react-hot-toast";
 import useAuth from "../hooks/useAuth";
 import {Helmet} from "react-helmet-async";
 import useAxios from "../hooks/useAxios";
+import loginPhoto from "../assets/login.svg"
 
 const Login = () => {
   const {login, loginWithGoogle, setIsLoading} = useAuth();
@@ -56,9 +57,10 @@ const Login = () => {
       <div className="g-6 flex h-full flex-wrap items-center justify-center lg:justify-between">
         <div className="mb-12 md:mb-0 hidden lg:block md:w-8/12 lg:w-6/12">
           <img
-            src="/login.svg"
+            src={loginPhoto}
             className="w-full scale-x-[-1]"
             alt="login-image"
+            loading="lazy"
           />
         </div>
 
@@ -121,7 +123,7 @@ const Login = () => {
             type="submit"
             className="flex justify-center items-center gap-4 py-2 rounded-2xl transition w-full text-lg md:text-xl normal-case bg-neutral hover:bg-neutral/80"
           >
-            <img src="/google.svg" alt="G" />
+            <img src="/google.svg"  alt="G" />
             <span>Continue with Google</span>
           </button>
         </div>
