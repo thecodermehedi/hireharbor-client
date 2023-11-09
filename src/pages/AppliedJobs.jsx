@@ -5,13 +5,16 @@ import useAuth from "../hooks/useAuth";
 import AppliedJobRow from "../components/AppliedJobRow";
 import {useState} from "react";
 import Loading from "../components/Loading";
-import { Helmet } from "react-helmet-async";
+import {Helmet} from "react-helmet-async";
 import ErrorComponent from "../components/ErrorComponent";
+import {useRef} from "react";
+import generatePDF from "react-to-pdf";
 
 const AppliedJobs = () => {
   const axios = useAxios();
   const {user} = useAuth();
   const [category, setCategory] = useState("");
+  const targetRef = useRef();
 
   const getJobCategories = async () => {
     const res = await axios.get("/categories");
@@ -49,6 +52,7 @@ const AppliedJobs = () => {
   if (isAppliedJobsError) {
     return <ErrorComponent error={jobsError} />;
   }
+
   return (
     <section className="container mx-auto ">
       <Helmet>
@@ -58,9 +62,15 @@ const AppliedJobs = () => {
         title="Your Job Applications"
         subTitle="Track the progress of your career pursuits"
       />
-      <div className="max-w-xs w-fit mr-3 md:w-96 md:mr-5 my-5 ml-auto">
+      <div className="w-full lg:mx-auto my-5 flex justify-between items-center">
+        <button
+          onClick={() => generatePDF(targetRef, {filename: "appliedjobs.pdf"})}
+          className="px-3 md:px-8 text-blackish font-semibold py-2 rounded-2xl bg-primary hover:bg-opacity-80 transition md:text-lg"
+        >
+          Download Summary
+        </button>
         <select
-          className="select w-full rounded-2xl py-3 px-4 bg-primary/10 focus:outline-none border-none text-right pr-10"
+          className="select w-fit rounded-2xl py-3 px-4 bg-primary/10 focus:outline-none border-none text-right pr-10 md:text-lg"
           id="category"
           required
           onChange={(e) => setCategory(e.target.value)}
@@ -78,7 +88,7 @@ const AppliedJobs = () => {
       </div>
       <section className="mb-20">
         <div>
-          <table className="table-auto w-full overflow-x-hidden">
+          <table className="table-auto w-full" ref={targetRef}>
             <thead className="bg-primary/30">
               <tr>
                 <th className="px-5 py-3 hidden md:table-cell">Company</th>
