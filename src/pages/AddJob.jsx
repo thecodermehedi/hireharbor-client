@@ -243,6 +243,7 @@ const AddJob = () => {
                 </label>
                 <DatePicker
                   selected={deadline}
+                  dateFormat="dd/MM/yyyy"
                   onChange={(date) => setDeadline(date)}
                   className="w-full  rounded-2xl   py-3 px-4 bg-neutral  focus:outline-none cursor-pointer"
                 />
