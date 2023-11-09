@@ -9,6 +9,7 @@ import {Helmet} from "react-helmet-async";
 import ErrorComponent from "../components/ErrorComponent";
 import {useRef} from "react";
 import generatePDF from "react-to-pdf";
+import toast from "react-hot-toast";
 
 const AppliedJobs = () => {
   const axios = useAxios();
@@ -53,6 +54,15 @@ const AppliedJobs = () => {
     return <ErrorComponent error={jobsError} />;
   }
 
+  const downloadPDF = () => {
+    const promise = generatePDF(targetRef, {filename: "applied-jobs.pdf"});
+    toast.promise(promise, {
+      loading: "Generating PDF...",
+      success: "PDF downloaded successfully",
+      error: "Failed to download PDF",
+    });
+  };
+
   return (
     <section className="container mx-auto ">
       <Helmet>
@@ -64,8 +74,8 @@ const AppliedJobs = () => {
       />
       <div className="w-full lg:mx-auto my-5 flex justify-between items-center">
         <button
-          onClick={() => generatePDF(targetRef, {filename: "appliedjobs.pdf"})}
-          className="px-3 md:px-8 text-blackish font-semibold py-2 rounded-2xl bg-primary hover:bg-opacity-80 transition md:text-lg"
+          onClick={downloadPDF}
+          className="px-3 md:px-8 text-black font-semibold py-2 rounded-2xl bg-secondary hover:bg-primary transition md:text-lg"
         >
           Download Summary
         </button>
@@ -87,9 +97,9 @@ const AppliedJobs = () => {
         </select>
       </div>
       <section className="mb-20">
-        <div>
+        <div className="rounded-2xl overflow-hidden">
           <table className="table-auto w-full" ref={targetRef}>
-            <thead className="bg-primary/30">
+            <thead className="bg-primary text-blackish">
               <tr>
                 <th className="px-5 py-3 hidden md:table-cell">Company</th>
                 <th className="px-5 py-3">Title</th>
