@@ -1,5 +1,5 @@
 import BannerComponent from "../components/ui/BannerComponent";
-import {useState} from "react";
+import {useEffect, useState} from "react";
 import {useMutation, useQuery, useQueryClient} from "@tanstack/react-query";
 import {useParams} from "react-router-dom";
 import useAxios from "../hooks/useAxios";
@@ -40,6 +40,13 @@ const UpdateJob = () => {
     queryFn: async () => await getJob(),
   });
 
+  useEffect(() => {
+    if (job) {
+      setUpdatedDeadline(new Date(job?.deadline));
+      setUpdatedCategory(job?.category);
+    }
+  }, [job]);
+
   const updateJob = async (updatedjob) => {
     const res = await axios.patch(`/postedjobs/${id}`, updatedjob);
     return res.data;
@@ -65,17 +72,14 @@ const UpdateJob = () => {
     logo,
     company,
     title,
-    category,
     location,
     applicants,
-    deadline,
     experienceLevel,
     salary,
     desc,
   } = job;
 
   const formattedDate = updatedDeadline.toISOString().slice(0, 10);
-
   const handleUpdateJob = async (e) => {
     e.preventDefault();
     const form = e.target;
@@ -124,7 +128,7 @@ const UpdateJob = () => {
                   className="block  text-xl text-opacity-80  font-semibold mb-2"
                   htmlFor="companyName"
                 >
-                  Company Name
+                  Update Company Name
                 </label>
                 <input
                   className="w-full rounded-2xl py-3 px-4 bg-neutral  focus:outline-none "
@@ -139,7 +143,7 @@ const UpdateJob = () => {
                   className="block    text-xl text-opacity-80  font-semibold mb-2"
                   htmlFor="jobTitle"
                 >
-                  Job Title
+                  Update Job Title
                 </label>
                 <input
                   className="w-full rounded-2xl py-3 px-4 bg-neutral  focus:outline-none "
@@ -157,10 +161,7 @@ const UpdateJob = () => {
                   className=" block   text-xl text-opacity-80  font-semibold mb-2"
                   htmlFor="category"
                 >
-                  Select Category{" "}
-                  <span className="text-primary text-xs md:text-base lg:text-xl">
-                    (Current: {category})
-                  </span>
+                  Update Category
                 </label>
                 <select
                   className="select w-full rounded-2xl py-3 px-4 bg-neutral focus:outline-none border-none"
@@ -181,7 +182,7 @@ const UpdateJob = () => {
                   className=" block   text-xl text-opacity-80  font-semibold mb-2"
                   htmlFor="salaryRange"
                 >
-                  Salary Range
+                  Update Salary Range
                 </label>
                 <input
                   className=" w-full    rounded-2xl    py-3 px-4 bg-neutral  focus:outline-none  "
@@ -198,7 +199,7 @@ const UpdateJob = () => {
                   className="block    text-xl text-opacity-80  font-semibold mb-2"
                   htmlFor="location"
                 >
-                  Location
+                  Update Location
                 </label>
                 <input
                   className="w-full rounded-2xl py-3 px-4 bg-neutral  focus:outline-none "
@@ -213,7 +214,7 @@ const UpdateJob = () => {
                   className="block    text-xl text-opacity-80  font-semibold mb-2"
                   htmlFor="applicants"
                 >
-                  Total Applicants
+                  Update Total Applicants
                 </label>
                 <input
                   className="w-full rounded-2xl py-3 px-4 bg-neutral  focus:outline-none "
@@ -229,7 +230,7 @@ const UpdateJob = () => {
                   className="block    text-xl text-opacity-80  font-semibold mb-2"
                   htmlFor="experience"
                 >
-                  Experience Level
+                  Update Experience Level
                 </label>
                 <input
                   className="rounded-2xl  py-3 px-4 bg-neutral  focus:outline-none "
@@ -244,13 +245,11 @@ const UpdateJob = () => {
                   className="block  text-xl text-opacity-80  font-semibold mb-2"
                   htmlFor="deadline"
                 >
-                  Deadline{" "}
-                  <span className="text-primary text-xs md:text-base lg:text-xl">
-                    (Current: {deadline})
-                  </span>
+                  Update Deadline
                 </label>
                 <DatePicker
                   selected={updatedDeadline}
+                  dateFormat="dd/MM/yyyy"
                   onChange={(date) => setUpdatedDeadline(date)}
                   className="w-full  rounded-2xl   py-3 px-4 bg-neutral  focus:outline-none cursor-pointer"
                 />
@@ -262,7 +261,7 @@ const UpdateJob = () => {
                   className=" block   text-xl text-opacity-80  font-semibold mb-2"
                   htmlFor="logoURL"
                 >
-                  Company Logo
+                  Update Company Logo
                 </label>
                 <input
                   className=" w-full rounded-2xl py-3 px-4 bg-neutral  focus:outline-none "
@@ -279,7 +278,7 @@ const UpdateJob = () => {
                   className=" block text-xl text-opacity-80  font-semibold mb-2"
                   htmlFor="bannerURL"
                 >
-                  Job Banner
+                  Update Job Banner
                 </label>
                 <input
                   className=" w-full rounded-2xl py-3 px-4 bg-neutral  focus:outline-none"
