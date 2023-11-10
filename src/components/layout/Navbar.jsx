@@ -8,16 +8,15 @@ import useAxios from "../../hooks/useAxios";
 const Navbar = () => {
   const {user, logout, isLoading} = useAuth();
   const axios = useAxios();
-  const removeJWT = async (user) => {
-    const res = await axios.post("/auth/logout", user);
+  const removeJWT = async () => {
+    const res = await axios.post("/auth/logout");
     return res.data;
   };
-  const sendUser = {email: user?.email};
   const handleLogout = async () => {
     const toastId = toast.loading("Logging out...");
     try {
       await logout();
-      await removeJWT(sendUser);
+      await removeJWT();
       toast.success("Logged out", {id: toastId});
     } catch (error) {
       toast.error(error.message, {id: toastId});

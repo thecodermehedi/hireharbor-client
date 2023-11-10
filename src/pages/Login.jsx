@@ -5,10 +5,10 @@ import toast from "react-hot-toast";
 import useAuth from "../hooks/useAuth";
 import {Helmet} from "react-helmet-async";
 import useAxios from "../hooks/useAxios";
-import loginPhoto from "../assets/login.svg"
+import loginPhoto from "../assets/login.svg";
 
 const Login = () => {
-  const {login, loginWithGoogle, setIsLoading} = useAuth();
+  const {login, loginWithGoogle, setIsLoading, user} = useAuth();
   const [showPassword, setShowPassword] = useState(false);
   const axios = useAxios();
   const [email, setEmail] = useState("");
@@ -23,10 +23,10 @@ const Login = () => {
   const handleLogIn = async (e) => {
     e.preventDefault();
     const toastId = toast.loading("Logging in ...");
-    const user = {email: email};
+    const newUser = {email: user?.email};
     try {
       await login(email, password);
-      await getJWT(user);
+      await getJWT(newUser);
       location?.state ? navigate(location.state) : navigate("/");
       toast.success("Logged in", {id: toastId});
     } catch (error) {
@@ -41,10 +41,12 @@ const Login = () => {
   };
   const handleGoogleLogin = async () => {
     const toastId = toast.loading("Logging in ...");
+    const newUser = {email: user?.email};
     try {
       await loginWithGoogle();
-      toast.success("Logged in", {id: toastId});
+      await getJWT(newUser);
       location?.state ? navigate(location.state) : navigate("/");
+      toast.success("Logged in", {id: toastId});
     } catch (error) {
       toast.error(error.message, {id: toastId});
     }
@@ -123,7 +125,7 @@ const Login = () => {
             type="submit"
             className="flex justify-center items-center gap-4 py-2 rounded-2xl transition w-full text-lg md:text-xl normal-case bg-neutral hover:bg-neutral/80"
           >
-            <img src="/google.svg"  alt="G" />
+            <img src="/google.svg" alt="G" />
             <span>Continue with Google</span>
           </button>
         </div>
