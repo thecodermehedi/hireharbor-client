@@ -10,7 +10,7 @@ const Subscribe = () => {
         <div className="relative w-5/6 lg:w-full">
           <input
             type="email"
-            className="input focus:outline-none placeholder:text-whitish placeholder:text-opacity-30 border-none w-full pr-16 rounded-2xl bg-neutral lg:h-16"
+            className="input focus:outline-none placeholder:text-whitish placeholder:text-opacity-30 focus:placeholder:text-opacity-0 border-none w-full pr-16 rounded-2xl bg-neutral lg:h-16"
             placeholder="Enter your email"
           />
           <button className="text-blackish font-semibold h-full bg-primary hover:bg-opacity-80 transition text-base md:text-xl border-none absolute top-0 right-0 rounded-2xl rounded-l-none px-2 md:px-3 lg:px-5">
