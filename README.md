@@ -1,16 +1,24 @@
 <div align="center">
 
-![](./public/logo.svg)
+![](./public/icon.svg)
 
-Your Gateway to Top Talent. Connect with the best in the industry, streamline your hiring process, and propel your business forward.
+# HireHarbor 
 
-## Live Links
+Your Dream Job in One Place.
 
-[![Firebase](https://img.shields.io/badge/Firebase-039BE5?style=for-the-badge&logo=Firebase&logoColor=white)](http://hireharbor-client.web.app) [![Vercel](https://img.shields.io/badge/vercel-%23000000.svg?style=for-the-badge&logo=vercel&logoColor=white)](https://hireharbor.vercel.app)
+[Live Website](http://hireharbor-client.web.app) 
+
+[Mirror Link](https://hireharbor.vercel.app)
 
 </div>
 
-## Features:
+## Introduction
+
+![](./public//preview.png)
+
+HireHarbor is a comprehensive job-seeking website designed to provide an intuitive and visually appealing platform for users to discover and apply for various job opportunities. The platform caters to different job types, including On-Site, Remote, Hybrid, and Part-Time positions.
+
+## ✅ Features
 
 - **React**: Utilizes the latest version of React for building user interfaces. React's component-based architecture makes it easy to manage and reuse code, leading to cleaner and more readable codebases.
 
